@@ -1,0 +1,63 @@
+name: Daily Update from sample_apps
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout self
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Checkout sample_apps
+        uses: actions/checkout@v4
+        with:
+          repository: yasslab/sample_apps
+          path: sample_apps
+
+      - name: Get commit id of sample_apps
+        run: |
+          echo "COMMIT_ID=$(cd sample_apps && git rev-parse HEAD)" >> $GITHUB_ENV
+
+      - name: Replace project files
+        run: |
+          find . -mindepth 1 -maxdepth 1 ! -name '.github' ! -name '.git' ! -name 'sample_apps' -exec rm -rf {} +
+          cp -r sample_apps/7_0/ch14/. .
+          rm -rf sample_apps
+
+      - name: Rebuild README.md
+        run: |
+          echo "" >> README.md
+          echo "# 本リポジトリについて" >> README.md
+          echo "" >> README.md
+          echo "このリポジトリは、YassLab 提供のリポジトリ [sample_apps](https://github.com/yasslab/sample_apps) 内の  " >> README.md
+          echo "7_0/ch14 ディレクトリを教育目的で取り出し、環境構築の手間を省いてすぐに試せるよう再構成したものです。  " >> README.md
+          echo "" >> README.md
+          echo "学生が [GitHub Codespaces](https://github.com/features/codespaces) で**最小の操作ですぐ動作確認ができるように**、プロジェクトのルートに配置してあります。  " >> README.md
+          echo "" >> README.md
+          echo "※ 本コードは以下のコミット時点の内容をルートに再構成しています：  " >> README.md
+          echo "https://github.com/yasslab/sample_apps/tree/${{ env.COMMIT_ID }}  " >> README.md
+          echo "" >> README.md
+          echo "⚠️ このリポジトリはテンプレートとして使われることを想定しています。リポジトリ作成後は .github/workflows を削除してください。準備フェーズですので、mainブランチで直接作業する例を示します。  " >> README.md
+          echo "" >> README.md
+          echo '1. rm -rf .github' >> README.md
+          echo '1. git add .' >> README.md
+          echo '1. git commit -m "Finalize ch14"' >> README.md
+          echo '1. git push -u origin main' >> README.md
+          echo "" >> README.md
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "🛠️ Daily update from sample_apps ($COMMIT_ID)" || echo "No changes"
+          git push -f origin main
