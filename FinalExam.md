@@ -342,22 +342,27 @@ end
 
 ## Part 3. Railsのトラブルシューティング(20点)
 
-Codespaceで立ち上げたRailsアプリケーションは一部の機能が正常に動きません。  
+Codespaceで立ち上げたRailsアプリケーションは簡易なTODO機能が実装されています。  
+ただし、一部の機能が正常に動きません。  
 あなたの顧客はたいへん困っています。Railsのプロであるあなたが解決してください。  
 
 
-1) `/help` にアクセスするとエラーが発生します。あきらめますか、エラーを解決しますか。(3点)
-2) まず最初に修正すべき1つ目のファイルは何で、どのように変更しますか。(9点)
-3) 2)で、1ファイルを書き換えただけでは解決しませんでした。以下のコードをどこかに置けば解決します。ファイルパスを答えてください。(8点)
+1) `/tasks/new` にアクセスし、適当な値を入力し、「Create Task」ボタンを押しても保存ができません。解決を目指しますか。あきらめますか。(3点)  
+2) ターミナルをよくみてください。発生しているエラーを特定し、ポイントとなるログを一行で書いてください。(3点)  
+3) 2) のログは、ルーティングエラーであるため、どのファイルを修正することで解決できるかを答えてください。(3点)  
+4) 3) の修正コードを答えてください。ヒント: `/tasks` パスへのPOSTを、`TasksController`の`create`メソッドへパスするように書けば正解です。(4点)  
+5) 4)の修正によりTaskを保存できるようになりましたので1件保存をしてください。「Task was successfully created.」が表示されるはずです。その後、`tasks/1` にアクセスしてください。赤い画面になるはずです。発生しているエラーを答えてください。赤い帯に表示されているエラーを答えてください。ヒント: `ActiveRecord::RecordNotFound`は不正解とします。`ActiveRecord::RecordNotFound`になる場合は、4)の修正が誤っており保存ができていないか、消したかのいずれかです。消した場合は、数字部分を`/tasks/2`や`/tasks/3`等に変えて読み替えてください。(3点)  
+6) 5) の解消には以下のファイルを配置すれば修正できます。配置する場所をファイルパスを答えてください。(4点)
 
 ```ruby
-<% provide(:title, "Help") %>
-<h1>Help</h1>
-<p>
-  Get help on the Ruby on Rails Tutorial at the
-  <a href="https://railstutorial.jp/help">Rails Tutorial Help page</a>.
-  To get help on this sample app, see the
-  <a href="https://railstutorial.jp/#ebook"><em>Ruby on Rails Tutorial</em>
-  book</a>.
-</p>
+<p style="color: green"><%= notice %></p>
+
+<%= render @task %>
+
+<div>
+  <%= link_to "Edit this task", edit_task_path(@task) %> |
+  <%= link_to "Back to tasks", tasks_path %>
+
+  <%= button_to "Destroy this task", @task, method: :delete %>
+</div>
 ```
