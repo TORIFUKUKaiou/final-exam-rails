@@ -3,7 +3,8 @@
 受験上の注意:  
 
 - 試験中は、Codespaces／Generative AI／授業配布資料／インターネットの技術記事の利用を許可します。
-- 合格戦略: まず Part 1（Ruby 基礎）で40点以上を確実に取り、Part 2（Rails 基礎）と Part 3（別紙・実技）で20点以上を積み上げてください。
+- 60点以上が合格です。
+- 合格戦略: まず Part 1（Ruby 基礎）で40点以上を確実に取り、Part 2（Rails 基礎）と Part 3（実技）で20点以上を積み上げてください。
 
 
 ## Part 1. Rubyの基本(50点)
@@ -111,6 +112,156 @@ puts b.inspect
 puts c.inspect
 ```
 
+### 問6 条件分岐とループ（5点）
+
+次のコードを読み、出力を上から順にすべて書きなさい。
+
+```ruby
+score = 85
+
+if score >= 90
+  puts "優秀"
+elsif score >= 70
+  puts "良好"
+else
+  puts "要努力"
+end
+
+puts "---"
+
+3.times do |i|
+  if i % 2 == 0
+    puts "#{i}は偶数"
+  else
+    puts "#{i}は奇数"
+  end
+end
+
+puts "---"
+
+name = "Ruby"
+puts name.length > 3 ? "長い名前" : "短い名前"
+```
+
+### 問7 文字列操作（5点）
+
+次のコードを読み、出力を上から順にすべて書きなさい。
+
+```ruby
+text = "Hello World"
+
+puts text.upcase
+puts text.downcase
+puts text.length
+
+puts "---"
+
+words = text.split(" ")
+puts words[0]
+puts words[1]
+
+puts "---"
+
+message = "Ruby"
+puts message + "言語"
+puts message * 3
+
+puts "---"
+
+str = "programming"
+puts str.include?("gram")
+puts str.include?("java")
+```
+
+### 問8 カレンダー出力（5点）
+
+次のコードを読み、出力を上から順にすべて書きなさい。
+
+```ruby
+require 'date'
+
+today = Date.today
+year = today.year
+month = today.month
+
+puts "#{year}年#{month}月"
+puts "日 月 火 水 木 金 土"
+
+# 今月1日の曜日を取得（0=日曜日）
+first_day = Date.new(year, month, 1)
+start_wday = first_day.wday
+
+# 今月の日数を取得
+last_day = Date.new(year, month, -1).day
+
+# 最初の週の空白を出力
+start_wday.times { print "   " }
+
+# 1日から月末まで出力
+(1..last_day).each do |day|
+  printf "%2d ", day
+  
+  # 土曜日の後は改行
+  if (day + start_wday - 1) % 7 == 6
+    puts
+  end
+end
+
+puts
+puts "今月は#{last_day}日まであります"
+```
+
+### 問9 配列の基本操作（5点）
+
+次のコードの空欄を埋めて、指定された出力になるようにしなさい。プログラム全体を提出しなさい。
+
+```ruby
+numbers = [1, 2, 3, 4, 5]
+
+# 配列の最初の要素を出力
+puts numbers[____]
+
+# 配列の最後の要素を出力  
+puts numbers[____]
+
+# 配列に6を追加
+numbers.____(6)
+
+# 配列の長さを出力
+puts numbers.____
+
+# 配列の2番目から3番目の要素を出力
+puts numbers[____].inspect
+```
+
+期待される出力：
+```
+1
+5
+6
+[2, 3]
+```
+
+### 問10 メソッドの作成（5点）
+
+次の仕様に従って、`greet_user`メソッドを完成させなさい。プログラム全体を提出しなさい。
+
+```ruby
+def greet_user(name, age)
+  # ここにコードを書く
+  # "こんにちは、[name]さん！あなたは[age]歳ですね。" を出力する
+end
+
+# テスト用のコード（変更しないこと）
+greet_user("田中", 20)
+greet_user("佐藤", 25)
+```
+
+期待される出力：
+```
+こんにちは、田中さん！あなたは20歳ですね。
+こんにちは、佐藤さん！あなたは25歳ですね。
+```
 
 
 ---
@@ -132,8 +283,8 @@ Rails.application.routes.draw do
 end
 ```
 
-1) `/help` にアクセスしたとき、呼び出されるコントローラ名とアクション名は？（5点）
-2) `/` にアクセスしたとき、呼び出されるコントローラ名とアクション名は？（5点）
+1) `/help` にアクセスしたとき、呼び出されるコントローラ名とアクション名は？ コントローラ名はクラス名で答えなさい。（5点）
+2) `/` にアクセスしたとき、呼び出されるコントローラ名とアクション名は？ コントローラ名はクラス名で答えなさい。（5点）
 
 
 ### 問2 コントローラとビュー（10点）
@@ -178,7 +329,8 @@ end
 
 1) 作成されるテーブル名と主なカラム名（型）を答えなさい（4点）  
 2) 開発用の初期データを投入するファイルパスを答えなさい（2点）  
-3) User を3件作成するRubyコード例を1通り書きなさい（`create!` 推奨、単純な3行で可）（4点）  
+3) データベースをマイグレーションするrailsのコマンドを答えなさい（2点）  
+4) User を3件作成するRubyコード例を1通り書きなさい（`create!` 推奨、単純な3行で可）（2点）  
 
 ---
 
