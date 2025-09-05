@@ -98,7 +98,6 @@ h.special_move                  # => （出力を書け）
 ### 問5 each / map / select（5点）
 
 次のコードを読み、出力を上から順にすべて書きなさい。  
-あわせて、`each` と `map` の戻り値の違いを説明しなさい。  
 
 ```ruby
 arr = [1, 2, 3, 4, 5]
@@ -229,7 +228,7 @@ puts numbers[____]
 puts numbers[____]
 
 # 配列に6を追加
-numbers.____(6)
+numbers.____(6) # 問3の書き方でももちろんOKです
 
 # 配列の長さを出力
 puts numbers.____
