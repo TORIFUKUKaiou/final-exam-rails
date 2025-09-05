@@ -140,7 +140,11 @@ end
 puts "---"
 
 name = "Ruby"
-puts name.length > 3 ? "長い名前" : "短い名前"
+if name.length > 3
+  puts "長い名前"
+else
+  puts "短い名前"
+end
 ```
 
 ### 問7 文字列操作（5点）
